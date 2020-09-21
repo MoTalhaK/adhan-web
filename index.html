@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adhan App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="main">
+        <h1 id="main-title">My Salat</h1>
+        <div class="text-display">
+            <p id="prayer-text">Showing prayer timings for</p>
+        </div>
+        <div class="date-container">
+            <h2 class="date"></h2>
+            <h2 class="city"></h2>
+        </div>
+        <div class="prayer-field">
+            <form class="search-form">
+                <input id="search-bar" type="text" placeholder="Location.." name="search">
+            </form>
+            <div class="prayers">
+                <div class="prayer">
+                    <p class="prayer-name">Fajr</p>
+                    <h2 class="prayer-time" id="fajr"></h2>
+                </div>
+                <div class="prayer">
+                    <p class="prayer-name">Sunrise</p>
+                    <h2 class="prayer-time" id="sunrise"></h2>
+                </div>
+                <div class="prayer">
+                    <p class="prayer-name">Dhuhr</p>
+                    <h2 class="prayer-time" id="dhuhr"></h2>
+                </div>
+                <div class="prayer">
+                    <p class="prayer-name">Asr</p>
+                    <h2 class="prayer-time" id="asr"></h2>
+                </div>
+                <div class="prayer">
+                    <p class="prayer-name">Maghrib</p>
+                    <h2 class="prayer-time" id="maghrib"></h2>
+                </div>
+                <div class="prayer">
+                    <p class="prayer-name">Isha'a</p>
+                    <h2 class="prayer-time" id="ishaa"></h2>
+                </div>
+        </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
