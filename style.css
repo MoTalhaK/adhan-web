@@ -4,6 +4,15 @@
     box-sizing: border-box;
 }
 
+body {
+    /*height: 100vh;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*flex-direction: column;*/
+    background-color: #eae7dc;
+}
+
 .main {
     text-align: center;
     display: flex;
@@ -13,10 +22,10 @@
     height: 100vh;
 }
 
-.main #main-title {
-    position: relative;
-    bottom: 200px;
-}
+/*.main #main-title {*/
+    /*position: relative;*/
+    /*bottom: 200px;*/
+/*}*/
 
 .prayers {
     display: flex;
@@ -29,7 +38,16 @@
     margin-top: 15px;
     width: 100px;
     height: 70px;
-    background-color: tomato;
+    background-color: #F2F2F2;
+    border-radius: 10px;
+}
+
+.prayer .prayer-name {
+    font-weight: bold;
+}
+
+.prayer .prayer-time {
+    color: deepskyblue;
 }
 
 .prayer-time {
@@ -72,4 +90,26 @@
 
 .text-display #prayer-text {
     text-align: right;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    /*text-align: center;*/
+    width: 100%;
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.main-display {
+    display: flex;
+    height: 250px;
+    width: 1140px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: gray;
+    border-radius: 10px;
 }
