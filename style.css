@@ -11,6 +11,7 @@ body {
     /*align-items: center;*/
     /*flex-direction: column;*/
     background-color: #eae7dc;
+    max-width: 100%;
 }
 
 .main {
@@ -20,22 +21,20 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    width: 100%;
 }
-
-/*.main #main-title {*/
-    /*position: relative;*/
-    /*bottom: 200px;*/
-/*}*/
 
 .prayers {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 100%;
     /*width: 300px;*/
 }
 
 .prayer {
     margin-top: 15px;
+    /*margin-bottom: 15px;*/
     width: 100px;
     height: 70px;
     background-color: #F2F2F2;
@@ -55,8 +54,17 @@ body {
     margin-bottom: 10px;
 }
 
+.prayer-field {
+    max-width: 100%;
+}
+
+.prayer-field .search-form {
+    max-width: 100%;
+}
+
 .prayer-field #search-bar {
     width: 1100px;
+    max-width: 100%;
     padding: 10px;
     font-size: 20px;
     outline: none;
@@ -72,6 +80,7 @@ body {
     justify-content: space-between;
     width: 1100px;
     margin-bottom: 15px;
+    max-width: 100%;
 }
 
 .date-container .date {
@@ -85,6 +94,7 @@ body {
 .text-display {
     display: block;
     width: 1100px;
+    max-width: 100%;
     /*justify-content: right;*/
 }
 
@@ -92,15 +102,25 @@ body {
     text-align: right;
 }
 
-.header {
+.header header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     position: absolute;
     /*text-align: center;*/
     width: 100%;
-    height: 60px;
+    height: 100px;
     padding-top: 10px;
     padding-bottom: 10px;
+    background: #d8c3a5;
+}
+
+.header header #main-title {
+    margin-left: 20px;
+}
+
+.header header #next-prayer {
+    margin-right: 200px;
 }
 
 .main-display {
@@ -112,4 +132,19 @@ body {
     flex-direction: column;
     background: gray;
     border-radius: 10px;
+    max-width: 100%;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    width: 1100px;
+    max-width: 100%;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.main .details div .details-text {
+    font-weight: bold;
+    text-decoration: underline;
 }
