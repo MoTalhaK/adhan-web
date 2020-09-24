@@ -9,7 +9,6 @@ let cityName = document.querySelector('.city');
 let search = document.querySelector('.search-form');
 let input = document.querySelector('#search-bar');
 let prayerMethod = document.querySelector('#prayer-method');
-let latLong = document.querySelector('#lat');
 
 const API_key = "pk.eyJ1Ijoia2hva2hhcjYiLCJhIjoiY2tmYW1vaWxrMHhmMTJ5cnF0aWJyYTI0eSJ9.5fdx9v5zTcM92HSZrh7_bg";
 // Islamic Society of North America
@@ -45,10 +44,10 @@ const EGAS = ["Africa/Abidjan", "Africa/Accra", "Africa/Addis_Ababa", "Africa/Al
 
 // Spiritual Administration of Muslims of Russia
 // includes various areas throughout Russia
-const SAMR = ["Asia/Anadyr","Asia/Barnaul","Asia/Chita","Asia/Irkutsk","Asia/Kamchatka","Asia/Khandyga","Asia/Krasnoyarsk",
-    "Asia/Magadan","Asia/Novokuznetsk","Asia/Novosibirsk","Asia/Omsk","Asia/Sakhalin","Asia/Srednekolymsk","Asia/Tomsk",
-    "Asia/Ust-Nera","Asia/Vladivostok","Asia/Yakutsk","Asia/Yekaterinburg","Europe/Astrakhan","Europe/Kaliningrad",
-    "Europe/Kirov","Europe/Moscow","Europe/Samara","Europe/Saratov","Europe/Simferopol","Europe/Ulyanovsk","Europe/Volgograd"];
+const SAMR = ["Asia/Anadyr", "Asia/Barnaul", "Asia/Chita", "Asia/Irkutsk", "Asia/Kamchatka", "Asia/Khandyga", "Asia/Krasnoyarsk",
+    "Asia/Magadan", "Asia/Novokuznetsk", "Asia/Novosibirsk", "Asia/Omsk", "Asia/Sakhalin", "Asia/Srednekolymsk", "Asia/Tomsk",
+    "Asia/Ust-Nera", "Asia/Vladivostok", "Asia/Yakutsk", "Asia/Yekaterinburg", "Europe/Astrakhan", "Europe/Kaliningrad",
+    "Europe/Kirov", "Europe/Moscow", "Europe/Samara", "Europe/Saratov", "Europe/Simferopol", "Europe/Ulyanovsk", "Europe/Volgograd"];
 
 /*display prayer timings for the current day for any city*/
 search.addEventListener("submit", e => {
@@ -150,21 +149,70 @@ function getPrayerTime(long, lat) {
             let dateAsr = new Date(date.readable + " " + timings.Asr);
             let dateMaghrib = new Date(date.readable + " " + timings.Maghrib);
             let currD = new Date();
-            console.log(dateDhuhr.getTime());
-            console.log(dateAsr.getTime());
+            let now = new Date();
             // currently between Isha'a and Fajr
-            if (dateFajr.getTime() > currD.getTime() && dateFajr.getTime() < dateIsha.getTime()) {
+            if (dates.inRange(dateFajr, now, dateFajr)) {
                 console.log("True");
+                currD.setDate(currD.getDate()+1);
+                console.log(currD.getDate());
+
+                let api = `http://api.aladhan.com/v1/timings/${currD.getUTCDate()}-09-2020?latitude=${lat}&longitude=${long}&method=2`;
+                fetch(api)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        let tomFajr = new Date(data.data.date.readable + " " + data.data.timings.Fajr);
+                        console.log(tomFajr);
+                        // countDown(tomFajr, now);
+                        setInterval(countDown(tomFajr, now), 1);
+                    });
             }
             // currently between Fajr and Dhuhr
             if (dateDhuhr.getTime() > currD.getTime() && dateFajr.getTime() < dateDhuhr.getTime()) {
                 console.log("True");
             }
             // currently between Dhuhr and Asr
-            if (dateDhuhr.getTime() > currD.getTime() && dateDhuhr.getTime() < dateAsr.getTime()) {
+            if (dateDhuhr.getTime() <= currD.getTime() && currD.getTime() < dateAsr.getTime()) {
                 console.log("True");
             }
+
+            if (dateMaghrib.getTime() <= currD.getTime() && currD.getTime() < dateIsha.getTime()) {
+                console.log("True");
+                // let x = setInterval(function () {
+                //     let now = currD.getTime();
+                //     let distance = dateIsha.getTime() - now;
+                //
+                //     let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                //     let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                //     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                //     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                //
+                //     document.getElementById("next-prayer").innerHTML = days + "d " + hours + "h "
+                //         + minutes + "m " + seconds + "s ";
+                //
+                //     if (distance < 0) {
+                //         clearInterval(x);
+                //         document.getElementById("next-prayer").innerHTML = "EXPIRED";
+                //     }
+                // }, 1000);
+                // countDown(dateIsha, currD);
+            }
         });
+}
+
+function countDown(countDownDate, currentDate) {
+    let now = currentDate.getTime();
+    let distance = countDownDate.getTime() - now;
+
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("next-prayer").innerHTML = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
 }
 
 function getCity(long, lat) {
@@ -218,6 +266,39 @@ function getPrayerMethod(meta) {
     return method;
 }
 
-function getTimeDiff() {
-
-}
+var dates = {
+    convert:function(d) {
+        // Converts the date in d to a date-object. The input can be:
+        //   a date object: returned without modification
+        //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
+        //   a number     : Interpreted as number of milliseconds
+        //                  since 1 Jan 1970 (a timestamp)
+        //   a string     : Any format supported by the javascript engine, like
+        //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
+        //  an object     : Interpreted as an object with year, month and date
+        //                  attributes.  **NOTE** month is 0-11.
+        return (
+            d.constructor === Date ? d :
+                d.constructor === Array ? new Date(d[0],d[1],d[2]) :
+                    d.constructor === Number ? new Date(d) :
+                        d.constructor === String ? new Date(d) :
+                            typeof d === "object" ? new Date(d.year,d.month,d.date) :
+                                NaN
+        );
+    },
+    inRange:function(d,start,end) {
+        // Checks if date in d is between dates in start and end.
+        // Returns a boolean or NaN:
+        //    true  : if d is between start and end (inclusive)
+        //    false : if d is before start or after end
+        //    NaN   : if one or more of the dates is illegal.
+        // NOTE: The code inside isFinite does an assignment (=).
+        return (
+            isFinite(d = this.convert(d).valueOf()) &&
+            isFinite(start = this.convert(start).valueOf()) &&
+            isFinite(end = this.convert(end).valueOf()) ?
+                start <= d && d <= end :
+                NaN
+        );
+    }
+};
