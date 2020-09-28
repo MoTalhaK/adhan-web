@@ -1,5 +1,3 @@
-var startTimer;
-
 var dates = {
     convert: function (d) {
         // Converts the date in d to a date-object. The input can be:
@@ -46,7 +44,7 @@ async function displayTimer(lat, long) {
     let currD = new Date();
     let cD = new Date();
     currD.setDate(currD.getDate() + 1);
-    let dataToday = await getData(`http://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`);
+    let dataToday = await getData(`https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`);
 
     let dateIsha = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Isha);
     let dateFajr = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Fajr);
@@ -54,27 +52,48 @@ async function displayTimer(lat, long) {
     let dateAsr = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Asr);
     let dateMaghrib = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Maghrib);
 
-    let dataTom = await getData(`http://api.aladhan.com/v1/timings/${currD.getUTCDate()}-09-2020?latitude=${lat}&longitude=${long}&method=2`);
+    let dataTom = await getData(`https://api.aladhan.com/v1/timings/${currD.getUTCDate()}-09-2020?latitude=${lat}&longitude=${long}&method=2`);
     let prayerTime;
+    // get tomorrows time for Fajr prayer
     let tomFajr = new Date(dataTom.data.date.readable + " " + dataTom.data.timings.Fajr);
     if (dates.inRange(tomFajr, cD, tomFajr)) {
         console.log("Fajr");
         prayerTime = tomFajr;
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Fajr in"
     }
-    startTimer = setInterval(calcTime, 100);
-    async function calcTime() {
+    if (dates.inRange(cD, dateFajr, dateDhuhr)) {
+        prayerTime = dateDhuhr;
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Dhuhr in"
+    }
+    if (dates.inRange(cD, dateDhuhr, dateAsr)) {
+        prayerTime = dateAsr;
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Asr in"
+    }
+    if (dates.inRange(cD, dateAsr, dateMaghrib)) {
+        prayerTime = dateMaghrib;
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Maghrib in"
+    }
+    if (dates.inRange(cD, dateMaghrib, dateIsha)) {
+        prayerTime = dateIsha;
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Isha'a in"
+    }
+    // startTimer = setInterval(calcTime, 100);
+    let startTime = setInterval(function() {
         let now = new Date();
         let current = now.getTime();
         let distance = prayerTime.getTime() - current;
 
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
         let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById("next-prayer").innerHTML = days + "d " + hours + "h "
+        document.getElementById('next-prayer').innerHTML = hours + "h "
             + minutes + "m " + seconds + "s ";
 
-    }
+        if (distance < 0) {
+            clearInterval(startTime);
+            document.getElementById('next-prayer').innerHTML = "0h " + "00m " + "00s ";
+        }
+    }, 100);
 }
 

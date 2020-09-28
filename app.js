@@ -55,7 +55,7 @@ search.addEventListener("submit", e => {
     e.preventDefault();
     const inputValue = input.value;
 
-    let api = `http://api.aladhan.com/v1/timingsByCity?city=${inputValue}&country=?&method=2`;
+    let api = `https://api.aladhan.com/v1/timingsByCity?city=${inputValue}&country=?&method=2`;
     let long;
     let lat;
     // first request used to determine prayer time calculation method
@@ -116,7 +116,7 @@ window.addEventListener('load', () => {
 
 /*get the prayer timings of the current day based on location using latitude and longitude*/
 async function getPrayerTime(long, lat) {
-    let api = `http://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`;
+    let api = `https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`;
     let longitude;
     let latitude;
     fetch(api)

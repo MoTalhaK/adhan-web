@@ -102,25 +102,45 @@ body {
     text-align: right;
 }
 
-.header header {
+header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     position: absolute;
     /*text-align: center;*/
     width: 100%;
     height: 100px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    margin: 0 auto;
+    /*padding-top: 10px;*/
+    /*padding-bottom: 10px;*/
     background: #d8c3a5;
 }
 
-.header header #main-title {
-    margin-left: 20px;
+header div .timer {
+    flex-direction: column;
+    margin-right: initial;
+    width: auto;
+    /*float: right;*/
 }
 
-.header header #next-prayer {
-    margin-right: 200px;
+header .timer #next-prayer-text {
+    /*margin-right: 15px;*/
+}
+
+header div #main-title {
+    width: auto;
+    float: left;
+}
+
+header #next-prayer {
+    /*margin-right: 200px;*/
+    /*text-align: left;*/
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    width: 1140px;
+    margin: 0 auto;
 }
 
 .main-display {
