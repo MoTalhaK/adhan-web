@@ -67,7 +67,7 @@ search.addEventListener("submit", e => {
             console.log(data);
             const {meta} = data.data;
             let method = getPrayerMethod(meta);
-            let api = `http://api.aladhan.com/v1/timingsByCity?city=${inputValue}&country=?&method=${method}`;
+            let api = `https://api.aladhan.com/v1/timingsByCity?city=${inputValue}&country=?&method=${method}`;
             // set DOM elements in second request
             fetch(api)
                 .then(response => {
