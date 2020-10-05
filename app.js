@@ -94,6 +94,7 @@ search.addEventListener("submit", e => {
                     lat = meta.latitude;
                     getCity(long, lat);
                     getLatLong(meta);
+                    displayTimer(lat, long, true);
                 });
         });
 });
@@ -117,8 +118,6 @@ window.addEventListener('load', () => {
 /*get the prayer timings of the current day based on location using latitude and longitude*/
 async function getPrayerTime(long, lat) {
     let api = `https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`;
-    let longitude;
-    let latitude;
     fetch(api)
         .then(response => {
             return response.json();

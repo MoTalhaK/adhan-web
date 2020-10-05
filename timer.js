@@ -40,48 +40,98 @@ async function getData(url) {
     return response.json();
 }
 
-async function displayTimer(lat, long) {
+function getLocalTime(offset) {
+    let d = new Date();
+    let localTime = d.getTime();
+    let localOffset = d.getTimezoneOffset() * 60000;
+    let utc = localTime + localOffset;
+
+}
+
+function changeTimeZone(date, ianatz) {
+    let invdate = new Date(date.toLocaleString('en-US', {timeZone: ianatz}));
+
+    let diff = date.getTime() - invdate.getTime();
+
+    return new Date(date.getTime() + diff);
+}
+var startTime;
+async function displayTimer(lat, long, flag) {
+    let dataTemp = await getData(`https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`);
+    const {meta} = dataTemp.data;
+    let method = getPrayerMethod(meta);
+    let dataToday = await getData(`https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=${method}`);
+    let tZ = dataToday.data.meta.timezone;
+    let options = {
+        timeZone: dataToday.data.meta.timezone,
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+    };
+
+    let formatter = new Intl.DateTimeFormat([], options);
+    let prayerDate = formatter.format(new Date());
     let currD = new Date();
-    let cD = new Date();
+
     currD.setDate(currD.getDate() + 1);
-    let dataToday = await getData(`https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`);
 
     let dateIsha = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Isha);
     let dateFajr = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Fajr);
     let dateDhuhr = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Dhuhr);
     let dateAsr = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Asr);
     let dateMaghrib = new Date(dataToday.data.date.readable + " " + dataToday.data.timings.Maghrib);
+    let currMonth = dataToday.data.date.gregorian.month.number;
+    let currYear = dataToday.data.date.gregorian.year;
+    let currDay = dataToday.data.date.gregorian.day;
 
-    let dataTom = await getData(`https://api.aladhan.com/v1/timings/${currD.getUTCDate()}-09-2020?latitude=${lat}&longitude=${long}&method=2`);
+    let dataTom = await getData(`https://api.aladhan.com/v1/timings/${currD.getUTCDate()}-${currMonth}-2020?latitude=${lat}&longitude=${long}&method=${method}`);
+    console.log(dataTom);
     let prayerTime;
     // get tomorrows time for Fajr prayer
     let tomFajr = new Date(dataTom.data.date.readable + " " + dataTom.data.timings.Fajr);
-    if (dates.inRange(tomFajr, cD, tomFajr)) {
+
+    let inRangeFajr = dates.inRange(prayerDate, prayerDate, tomFajr);
+    let inRangeDhuhr = dates.inRange(prayerDate, dateFajr, dateDhuhr);
+    let inRangeAsr = dates.inRange(prayerDate, dateDhuhr, dateAsr);
+    let inRangeMaghrib = dates.inRange(prayerDate, dateAsr, dateMaghrib);
+    let inRangeIsha = dates.inRange(prayerDate, dateMaghrib, dateIsha);
+
+    if (inRangeFajr && !inRangeDhuhr && !inRangeAsr && !inRangeMaghrib && !inRangeIsha) {
+        clearInterval(startTime);
         console.log("Fajr");
-        prayerTime = tomFajr;
-        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Fajr in"
+        prayerTime = new Date(tomFajr).getTime();
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Fajr in";
     }
-    if (dates.inRange(cD, dateFajr, dateDhuhr)) {
-        prayerTime = dateDhuhr;
-        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Dhuhr in"
+    if (inRangeDhuhr) {
+        console.log("Dhuhr");
+        prayerTime = new Date(dateDhuhr).getTime();
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Dhuhr in";
     }
-    if (dates.inRange(cD, dateDhuhr, dateAsr)) {
-        prayerTime = dateAsr;
-        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Asr in"
+    if (inRangeAsr) {
+        console.log("Asr");
+        clearInterval(startTime);
+        prayerTime = new Date(dateAsr).getTime();
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Asr in";
     }
-    if (dates.inRange(cD, dateAsr, dateMaghrib)) {
-        prayerTime = dateMaghrib;
-        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Maghrib in"
+    if (inRangeMaghrib) {
+        console.log("Maghrib");
+        prayerTime = new Date(dateMaghrib).getTime();
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Maghrib in";
+
     }
-    if (dates.inRange(cD, dateMaghrib, dateIsha)) {
-        prayerTime = dateIsha;
-        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Isha'a in"
+    if (inRangeIsha) {
+        console.log("Isha'a");
+        prayerTime = new Date(dateIsha).getTime();
+        document.getElementById('next-prayer-text').innerHTML = "Next Prayer Isha'a in";
     }
-    // startTimer = setInterval(calcTime, 100);
-    let startTime = setInterval(function() {
-        let now = new Date();
-        let current = now.getTime();
-        let distance = prayerTime.getTime() - current;
+    startTime = setInterval(function() {
+        let cD = luxon.DateTime.local().setZone(tZ);
+        let local = luxon.DateTime.local(parseInt(currYear), parseInt(currMonth), parseInt(currDay),
+            cD.hour, cD.minute, cD.second);
+        let distance = prayerTime - local;
 
         let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -94,6 +144,6 @@ async function displayTimer(lat, long) {
             clearInterval(startTime);
             document.getElementById('next-prayer').innerHTML = "0h " + "00m " + "00s ";
         }
-    }, 100);
+    }, 500);
 }
 
