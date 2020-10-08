@@ -40,21 +40,6 @@ async function getData(url) {
     return response.json();
 }
 
-function getLocalTime(offset) {
-    let d = new Date();
-    let localTime = d.getTime();
-    let localOffset = d.getTimezoneOffset() * 60000;
-    let utc = localTime + localOffset;
-
-}
-
-function changeTimeZone(date, ianatz) {
-    let invdate = new Date(date.toLocaleString('en-US', {timeZone: ianatz}));
-
-    let diff = date.getTime() - invdate.getTime();
-
-    return new Date(date.getTime() + diff);
-}
 var startTime;
 async function displayTimer(lat, long, flag) {
     let dataTemp = await getData(`https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=2`);
@@ -106,6 +91,7 @@ async function displayTimer(lat, long, flag) {
         document.getElementById('next-prayer-text').innerHTML = "Next Prayer Fajr in";
     }
     if (inRangeDhuhr) {
+        clearInterval(startTime);
         console.log("Dhuhr");
         prayerTime = new Date(dateDhuhr).getTime();
         document.getElementById('next-prayer-text').innerHTML = "Next Prayer Dhuhr in";
@@ -117,12 +103,13 @@ async function displayTimer(lat, long, flag) {
         document.getElementById('next-prayer-text').innerHTML = "Next Prayer Asr in";
     }
     if (inRangeMaghrib) {
+        clearInterval(startTime);
         console.log("Maghrib");
         prayerTime = new Date(dateMaghrib).getTime();
         document.getElementById('next-prayer-text').innerHTML = "Next Prayer Maghrib in";
-
     }
     if (inRangeIsha) {
+        clearInterval(startTime);
         console.log("Isha'a");
         prayerTime = new Date(dateIsha).getTime();
         document.getElementById('next-prayer-text').innerHTML = "Next Prayer Isha'a in";
