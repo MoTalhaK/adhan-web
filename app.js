@@ -160,13 +160,6 @@ function getCity(long, lat) {
         });
 }
 
-async function getPrayerTimesCalendar(long, lat) {
-    let getMethod = await getData(`https://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${long}&method=2`);
-    let method = getPrayerMethod(getMethod.data[0].meta);
-    let api = await getData(`https://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${long}&method=${method}`);
-    console.log(api.data);
-}
-
 function getLatLong(meta) {
     let lat;
     let long;

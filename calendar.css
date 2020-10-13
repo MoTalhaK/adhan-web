@@ -1,5 +1,26 @@
+/*common styles*/
+table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+tr, th {
+    text-align: center;
+}
+
+th, td {
+    padding: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/*class styles*/
 .calendar-bg {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 1140px;
     height: 100vh;
@@ -15,7 +36,7 @@
     height: fit-content;
 }
 
-.calendar-bg > h2:last-child {
+.calendar-bg > h2#hidden {
     visibility: hidden;
 }
 
@@ -23,6 +44,11 @@
 
 }
 
-.calendar {
-
+.calendar-bg .calendar {
+    width: 100%;
+    height: 100%;
+    margin: 15px;
+    box-sizing: padding-box;
+    padding-bottom: 90px;
+    overflow-y: auto;
 }
