@@ -9,12 +9,17 @@ tr, th {
 }
 
 th, td {
-    padding: 10px;
+    padding: 15px;
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
+    font-size: 18px;
+}
+
+td {
+    background: whitesmoke;
 }
 
 /*class styles*/
@@ -51,4 +56,9 @@ table {
     box-sizing: padding-box;
     padding-bottom: 90px;
     overflow-y: auto;
+}
+
+.calendar-bg .calendar .calendar-date,
+thead{
+    background: white;
 }
