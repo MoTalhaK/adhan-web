@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="beb61467-ea4c-4133-bf92-89e28ac49c72" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/calendar.css" beforeDir="false" afterPath="$PROJECT_DIR$/calendar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/calendar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="beb61467-ea4c-4133-bf92-89e28ac49c72" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +23,8 @@
       <file leaf-file-name="calendar.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/calendar.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+            <state relative-caret-position="529">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
             </state>
           </provider>
         </entry>
@@ -107,7 +103,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="2220" />
     <option name="y" value="85" />
     <option name="width" value="2415" />
@@ -188,12 +184,12 @@
       <workItem from="1602109207621" duration="6718000" />
       <workItem from="1602211085885" duration="4405000" />
       <workItem from="1602290114215" duration="9412000" />
-      <workItem from="1602551441344" duration="3396000" />
+      <workItem from="1602551441344" duration="3473000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201079000" />
+    <option name="totallyTimeSpent" value="201156000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1913" y="-7" width="2062" height="1126" extended-state="6" />
@@ -579,8 +575,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/calendar.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+        <state relative-caret-position="529">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
     </entry>
