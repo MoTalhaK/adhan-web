@@ -32,7 +32,8 @@ async function getPrayerTimesCalendar(long, lat) {
         // sunrise
         sunriseTime.push(api.data[i].timings.Sunrise);
     }
-    // console.log(fajrTime);
+
+    let todayDate = new Date();
     let table = document.getElementById('calendar-body');
     for (let i = 0, row; row = table.rows[i]; i++) {
         let calDate = row.getElementsByTagName('th');
@@ -50,6 +51,18 @@ async function getPrayerTimesCalendar(long, lat) {
         dateMaghrib[0].innerHTML = maghribTime[i];
         dateIsha[0].innerHTML = ishaTime[i];
         dateSunrise[0].innerHTML = sunriseTime[i];
+
+        if (todayDate.getDate().toString() === calDate[0].innerHTML.toString()) {
+            console.log('true');
+            row.classList.add('current-day');
+            calDate[0].classList.add('current-day');
+            dateFajr[0].classList.add('current-day');
+            dateDhuhr[0].classList.add('current-day');
+            dateAsr[0].classList.add('current-day');
+            dateMaghrib[0].classList.add('current-day');
+            dateIsha[0].classList.add('current-day');
+            dateSunrise[0].classList.add('current-day');
+        }
 
         for (let j = 0, col; col = row.cells[j]; j++) {
 

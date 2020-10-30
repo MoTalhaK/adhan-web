@@ -62,3 +62,7 @@ td {
 thead{
     background: white;
 }
+
+.calendar-bg .calendar .current-day {
+    background: greenyellow !important;
+}

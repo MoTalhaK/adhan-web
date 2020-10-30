@@ -148,16 +148,24 @@ async function getPrayerTime(long, lat) {
 
 function getCity(long, lat) {
     let api = `https://api.mapbox.com/geocoding/v5/mapbox.places/${long},${lat}.json?types=place&access_token=${API_key}`;
-
     fetch(api)
         .then(response => {
+            // console.log(response.body);
+            // if (!response.ok) {
+            //     throw new Error('network response not ok.');
+            // }
             return response.json();
         })
         .then(data => {
             console.log(data);
-
+            // if (data.features && data.features.length === 0) {
+            //
+            // }
             cityName.textContent = data.features[0].place_name;
         });
+        // .catch(error => {
+        //     console.error('problem with fetch request.', error);
+        // });
 }
 
 function getLatLong(meta) {
