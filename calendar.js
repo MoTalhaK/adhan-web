@@ -1,4 +1,6 @@
 let calendarMonth = document.querySelector('#calendar-month');
+let tableMonth = document.querySelector('#month');
+let lastDate = document.querySelector('.last-date');
 let calendarDate = document.querySelector('.calendar-date');
 
 async function getPrayerTimesCalendar(long, lat) {
@@ -8,6 +10,7 @@ async function getPrayerTimesCalendar(long, lat) {
     const {date} = api.data[0];
     // get current calendar month and year
     calendarMonth.textContent = date.gregorian.month.en + " " + date.gregorian.year;
+    tableMonth.textContent = date.gregorian.month.en;
     console.log(api.data);
     console.log(api.data.length);
     // calendar date
@@ -18,6 +21,7 @@ async function getPrayerTimesCalendar(long, lat) {
     let maghribTime = [];
     let ishaTime = [];
     let sunriseTime = [];
+
     for (let i = 0; i < api.data.length; i++) {
         // add dates of current month to array
         dates.push(api.data[i].date.gregorian.day);
@@ -33,6 +37,8 @@ async function getPrayerTimesCalendar(long, lat) {
         sunriseTime.push(api.data[i].timings.Sunrise);
     }
 
+    // modify table
+    // fill table with prayer timings
     let todayDate = new Date();
     let table = document.getElementById('calendar-body');
     for (let i = 0, row; row = table.rows[i]; i++) {
@@ -52,7 +58,7 @@ async function getPrayerTimesCalendar(long, lat) {
         dateIsha[0].innerHTML = ishaTime[i];
         dateSunrise[0].innerHTML = sunriseTime[i];
 
-        if (todayDate.getDate().toString() === calDate[0].innerHTML.toString()) {
+        if (todayDate.getDate() === parseInt(calDate[0].innerHTML)) {
             console.log('true');
             row.classList.add('current-day');
             calDate[0].classList.add('current-day');
@@ -68,7 +74,10 @@ async function getPrayerTimesCalendar(long, lat) {
 
         }
     }
-    // prayer timings
 
+    // remove last row in table if month only has 30 dates
+    if (dates.length === 30) {
+        lastDate.classList.add('hidden-date')
+    }
 }
 

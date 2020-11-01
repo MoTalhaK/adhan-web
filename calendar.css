@@ -22,6 +22,11 @@ td {
     background: whitesmoke;
 }
 
+/*Utilities*/
+.hidden-date {
+    display: none;
+}
+
 /*class styles*/
 .calendar-bg {
     display: flex;
@@ -45,10 +50,6 @@ td {
     visibility: hidden;
 }
 
-.calendar-bg > h2#calendar-month {
-
-}
-
 .calendar-bg .calendar {
     width: 100%;
     height: 100%;
@@ -66,3 +67,4 @@ thead{
 .calendar-bg .calendar .current-day {
     background: greenyellow !important;
 }
+
