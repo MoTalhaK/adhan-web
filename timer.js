@@ -72,7 +72,7 @@ async function displayTimer(lat, long, flag) {
     let currYear = dataToday.data.date.gregorian.year;
     let currDay = dataToday.data.date.gregorian.day;
 
-    let dataTom = await getData(`https://api.aladhan.com/v1/timings/${currD.getUTCDate()}-${currMonth}-2020?latitude=${lat}&longitude=${long}&method=${method}`);
+    let dataTom = await getData(`https://api.aladhan.com/v1/timings/${currD.getUTCDate()}-${currMonth}-${currYear}?latitude=${lat}&longitude=${long}&method=${method}`);
     console.log(dataTom);
     let prayerTime;
     // get tomorrows time for Fajr prayer
