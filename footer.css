@@ -1,0 +1,35 @@
+.footer-container {
+    display: flex;
+    /*justify-content: flex-start;*/
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background: #d8c3a5;
+}
+
+footer {
+    width: auto;
+}
+
+footer .profile-links {
+    margin: auto;
+}
+
+footer .footnote {
+    text-align: center;
+    margin-top: 5px;
+    /*margin-left: 50px;*/
+    color: black;
+    opacity: 0.6;
+}
+
+footer .footnote .copyright {
+    color: #625449;
+}
+
+/*@media screen and (max-width: 768px) {*/
+    /*.footer-container {*/
+        /*text-align: center;*/
+        /*width: 100%;*/
+    /*}*/
+/*}*/

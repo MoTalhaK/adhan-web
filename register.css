@@ -1,0 +1,74 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    width: 100%;
+    max-width: 450px;
+    height: 600px;
+    border-radius: 10px;
+    /*background: #625449;*/
+    background: #B7C68B;
+    padding: 40px;
+    /*margin-top: 50px;*/
+}
+
+.register-title {
+    opacity: 0.7;
+    margin-top: 20px;
+    font-size: 2.4rem;
+    font-weight: 600;
+}
+
+.register-container form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.register-container form label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    /*background-color: #3274d6;*/
+    background: #F4F0CB;
+    color: #000000;
+}
+
+.register-container form input[type="password"],
+.register-container form input[type="text"],
+.register-container form input[type="email"] {
+    width: 310px;
+    height: 50px;
+    border: 1px solid #dee0e4;
+    margin-bottom: 20px;
+    padding: 0 14px;
+    outline: none;
+}
+
+.register-container form input[type="password"]:focus,
+.register-container form input[type="text"]:focus,
+.register-container form input[type="email"]:focus {
+    border: 2px solid #c8c49f;
+}
+
+.register-container form input[type="submit"] {
+    width: 100%;
+    max-width: 100px;
+    padding: 15px;
+    margin-top: 25px;
+    background: #F4F0CB;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #000000;
+    transition: background-color 0.2s;
+}
+
+.register-container form input[type="submit"]:hover {
+    background-color: #e3dfbe;
+    transition: background-color 0.2s;
+}
