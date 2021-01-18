@@ -15,13 +15,15 @@ async function getPrayerTimesCalendar(long, lat, inputValue, city) {
         let method = getPrayerMethod(getMethod.data[0].meta);
         api = await getData(`https://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${long}&method=${method}`);
     }
+
+    let localTimezone = api.data[0].meta.timezone;
+    let localDate = luxon.DateTime.local().setZone(localTimezone);
+
     const {date} = api.data[0];
-    // get current calendar month and year
+
     calendarMonth.textContent = date.gregorian.month.en + " " + date.gregorian.year;
     tableMonth.textContent = date.gregorian.month.en;
-    console.log(api.data);
-    console.log(api.data.length);
-    // calendar date
+
     let dates = [];
     let fajrTime = [];
     let dhuhrTime = [];
@@ -34,7 +36,7 @@ async function getPrayerTimesCalendar(long, lat, inputValue, city) {
         // add dates of current month to array
         dates.push(api.data[i].date.gregorian.day);
 
-        // add timings of each prayer to
+        // add timings of each prayer to array
         fajrTime.push(api.data[i].timings.Fajr);
         dhuhrTime.push(api.data[i].timings.Dhuhr);
         asrTime.push(api.data[i].timings.Asr);
@@ -45,9 +47,7 @@ async function getPrayerTimesCalendar(long, lat, inputValue, city) {
         sunriseTime.push(api.data[i].timings.Sunrise);
     }
 
-    // modify table
     // fill table with prayer timings
-    let todayDate = new Date();
     let table = document.getElementById('calendar-body');
     for (let i = 0, row; row = table.rows[i]; i++) {
         let calDate = row.getElementsByTagName('th');
@@ -66,8 +66,20 @@ async function getPrayerTimesCalendar(long, lat, inputValue, city) {
         dateIsha[0].innerHTML = ishaTime[i];
         dateSunrise[0].innerHTML = sunriseTime[i];
 
-        if (todayDate.getDate() === parseInt(calDate[0].innerHTML)) {
-            // console.log('true');
+        // flag to check if the user is searching for a city, if true we remove the css selector
+        if (city) {
+            row.classList.remove('current-day');
+            calDate[0].classList.remove('current-day');
+            dateFajr[0].classList.remove('current-day');
+            dateDhuhr[0].classList.remove('current-day');
+            dateAsr[0].classList.remove('current-day');
+            dateMaghrib[0].classList.remove('current-day');
+            dateIsha[0].classList.remove('current-day');
+            dateSunrise[0].classList.remove('current-day');
+        }
+        // check to see if the day in the local timezone matches the day in the calendar
+        // apply css selector to that particular day (highlights the elements)
+        if (localDate.day === parseInt(calDate[0].innerHTML)) {
             row.classList.add('current-day');
             calDate[0].classList.add('current-day');
             dateFajr[0].classList.add('current-day');

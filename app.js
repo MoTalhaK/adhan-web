@@ -95,7 +95,7 @@ async function getPrayerTime(long, lat) {
 
             // make another request to get prayer calculation method
             let method = getPrayerMethod(meta);
-            let calculationMethod = getData(`https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=${method}`)
+            let calculationMethod = getData(`https://api.aladhan.com/v1/timings/:date_or_timestamp?latitude=${lat}&longitude=${long}&method=${method}`);
             calculationMethod.then(data => {
                 console.log(data);
                 const {timings, date, meta} = data.data;
