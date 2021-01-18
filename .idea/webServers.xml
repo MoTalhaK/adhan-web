@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b21a2f05-c5d9-4e4a-8c41-d1c8c8f2ac62" name="XAMPP Apache" url="http://localhost/adhan-app">
+        <fileTransfer port="0" mountedRoot="D:\xaamp\htdocs\adhan-app" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>

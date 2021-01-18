@@ -1,3 +1,11 @@
+<?php
+session_start();
+// if user is not logged in, redirect them to the login page
+if (!isset($_SESSION['loggedin'])) {
+    header('Location: login.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +30,14 @@
         </div>
     </div>
     <div class="reg">
-        <a class="btn"><span>Login</span></a>
+        <a href="login.html" class="btn"><span>Login</span></a>
         <a href="register.php" class="btn"><span>Register</span></a>
+        <?php
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+            echo '<style type="text/css"> .btn {display: none;} </style>';
+        }
+        ?>
+        <p>Welcome back, <?=$_SESSION['name']?>!</p>
     </div>
 </header>
 
@@ -391,7 +405,7 @@
     <footer>
         <div class="footnote">
             My Salat <span class="copyright">© 2021</span> All rights reserved.
-            <p>Read our <a href="index.html">Terms and Conditions</a> and <a href="index.html">Privacy Policies</a></p>
+            <p>Read our <a href="index.php">Terms and Conditions</a> and <a href="index.php">Privacy Policies</a></p>
         </div>
     </footer>
 </div>

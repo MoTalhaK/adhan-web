@@ -58,6 +58,9 @@ search.addEventListener("submit", e => {
                     getCity(long, lat);
                     getLatLong(meta);
                     displayTimer(lat, long, true);
+                    console.log("method", method);
+                    console.log("input", inputValue);
+                    getPrayerTimesCalendar(long, lat, inputValue, true);
                 });
         });
 });
@@ -74,7 +77,7 @@ window.addEventListener('load', () => {
 
             getPrayerTime(long, lat);
             getCity(long, lat);
-            getPrayerTimesCalendar(long, lat);
+            getPrayerTimesCalendar(long, lat, null, false);
         });
     }
 });

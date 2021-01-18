@@ -3,10 +3,18 @@ let tableMonth = document.querySelector('#month');
 let lastDate = document.querySelector('.last-date');
 let calendarDate = document.querySelector('.calendar-date');
 
-async function getPrayerTimesCalendar(long, lat) {
-    let getMethod = await getData(`https://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${long}&method=2`);
-    let method = getPrayerMethod(getMethod.data[0].meta);
-    let api = await getData(`https://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${long}&method=${method}`);
+async function getPrayerTimesCalendar(long, lat, inputValue, city) {
+    let api;
+    if (city === true) {
+        console.log("true");
+        let getMethod = await getData(`https://api.aladhan.com/v1/calendarByCity?city=${inputValue}&country=?&method=2`);
+        let methodCity = getPrayerMethod(getMethod.data[0].meta);
+        api = await getData(`https://api.aladhan.com/v1/calendarByCity?city=${inputValue}&country=?&method=${methodCity}`);
+    } else {
+        let getMethod = await getData(`https://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${long}&method=2`);
+        let method = getPrayerMethod(getMethod.data[0].meta);
+        api = await getData(`https://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${long}&method=${method}`);
+    }
     const {date} = api.data[0];
     // get current calendar month and year
     calendarMonth.textContent = date.gregorian.month.en + " " + date.gregorian.year;
@@ -59,7 +67,7 @@ async function getPrayerTimesCalendar(long, lat) {
         dateSunrise[0].innerHTML = sunriseTime[i];
 
         if (todayDate.getDate() === parseInt(calDate[0].innerHTML)) {
-            console.log('true');
+            // console.log('true');
             row.classList.add('current-day');
             calDate[0].classList.add('current-day');
             dateFajr[0].classList.add('current-day');
