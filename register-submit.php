@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //        exit();
     }
 
-// check if account alreadt exists
+// check if account already exists
     if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
         $stmt->bind_param('s', $_POST['username']);
         $stmt->execute();

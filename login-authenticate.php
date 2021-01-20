@@ -3,7 +3,7 @@ session_start();
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
-$DATABASE_NAME = 'mysalatlogin';
+$DATABASE_NAME = 'mysalatregister';
 
 $success = "";
 $submitted = false;

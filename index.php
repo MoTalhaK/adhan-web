@@ -1,10 +1,10 @@
 <?php
 session_start();
 // if user is not logged in, redirect them to the login page
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: login.html');
-    exit;
-}
+//if (!isset($_SESSION['loggedin'])) {
+//    header('Location: login.html');
+//    exit;
+//}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,30 +14,46 @@ if (!isset($_SESSION['loggedin'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"-->
           <!--integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
-    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./header.css">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./calendar.css">
     <link rel="stylesheet" href="./footer.css">
 </head>
 <body>
 <header>
-    <div>
-        <h1 id="main-title">My Salat</h1>
-        <!--<h2 id="next-prayer"></h2>-->
-        <div class="timer">
+    <div class="header-container">
+        <div class="header-item"><a href="index.php"><img class="logo" src="images/logo.png" style="width: 70px;height: 70px;object-fit: cover"></a></div>
+        <div class="timer header-item">
             <h2 id="next-prayer-text"></h2>
             <h2 id="next-prayer"></h2>
         </div>
-    </div>
-    <div class="reg">
-        <a href="login.html" class="btn"><span>Login</span></a>
-        <a href="register.php" class="btn"><span>Register</span></a>
-        <?php
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-            echo '<style type="text/css"> .btn {display: none;} </style>';
-        }
-        ?>
-        <p>Welcome back, <?=$_SESSION['name']?>!</p>
+
+        <div class="reg header-item">
+            <a href="login.html" class="btn"><span>Login</span></a>
+            <div class="border"></div>
+            <a href="register.php" class="btn"><span>Register</span></a>
+            <?php
+            if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+                echo '<style type="text/css"> .header-menu {display: block;} </style>';
+            }
+            ?>
+            <div class="header-menu">
+                <a class="dropdown-btn" onclick="showMenu()">
+                    <?php
+                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+                        echo '<style type="text/css"> .btn {display: none;} </style>';
+                        echo $_SESSION['name'];
+                        echo '<i class="fas fa-caret-down c1"></i>';
+                    }
+                    ?>
+                </a>
+                <div id="dropdown" class="dropdown-content">
+                    <a href="profile.php">Profile</a>
+                    <a href="logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 
